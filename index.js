@@ -96,11 +96,11 @@ async function run() {
     })
    
     // update 
-    app.put("/update/:id", async (req,res)=>{
+    app.put("/updatee/:id", async (req,res)=>{
       const id =req.params.id;
-      // console.log(id)
+      console.log(id)
       const filter ={_id:new ObjectId(id)}
-      // console.log(filter);
+      console.log(filter);
       const option ={upsert:true};
       const bookData= req.body;
       console.log(bookData);
