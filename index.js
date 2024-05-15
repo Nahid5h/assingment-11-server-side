@@ -9,8 +9,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "hotelbooking-bb5b1.web.app",
-      "hotelbooking-bb5b1.firebaseapp.com"
+      "https://hotelbooking-bb5b1.web.app",
+      "https://hotelbooking-bb5b1.firebaseapp.com"
       
     ],
     credentials: true,
