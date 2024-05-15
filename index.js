@@ -45,7 +45,7 @@ async function run() {
     app.get("/featured", async(req,res)=>{
       const result = await roomsCollection.find().toArray()
 
-      res.send(result)
+      res.send(result);
 
     })
     app.get("/myBooking", async(req,res)=>{
@@ -58,6 +58,31 @@ async function run() {
       // console.log(result);
       res.send(result)
 
+    })
+    app.get("/viewDetail/:id", async(req,res)=>{
+      const result = await dataCollection.findOne({_id:new ObjectId(req.params.id),
+      })
+      res.send(result)
+    })
+    // update 
+    app.put("/update/:id", async (req,res)=>{
+      const id =req.params.id;
+      const filter ={_id:new ObjectId(id)}
+      const option ={upsert:true};
+      const updateSport= req.body;
+      const spot ={
+        $set:{
+          
+          name :updateSport.name,
+          email:updateSport.email,
+          date:updateSport.date,
+        
+             
+        
+        }
+      }
+      result = await dataCollection.updateOne(filter,spot,option)
+     res.send(result)
     })
     // delete 
     app.delete("/delete/:id", async (req,res)=>{
