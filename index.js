@@ -48,6 +48,28 @@ async function run() {
       res.send(result)
 
     })
+    app.get("/myBooking", async(req,res)=>{
+
+      const email=req.query.email;
+      // console.log(email)
+      const query={email:email}
+      // console.log(query);
+      const result = await dataCollection.find(query).toArray();
+      // console.log(result);
+      res.send(result)
+
+    })
+    // delete 
+    app.delete("/delete/:id", async (req,res)=>{
+      const id =req.params.id;
+      console.log(id);
+      const query ={ _id: new ObjectId(id)}
+      const result = await dataCollection.deleteOne({_id: new ObjectId(req.params.id),
+      })
+      console.log(result)
+      res.send(result);
+    })
+   
     // update 
     app.put("/update/:id", async (req,res)=>{
       const id =req.params.id;
