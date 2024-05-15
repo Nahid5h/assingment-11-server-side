@@ -4,6 +4,19 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const app=express();
 const port =process.env.PORT || 5000;
+//Must remove "/" from your production URL
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "hotelbooking-bb5b1.web.app",
+      "hotelbooking-bb5b1.firebaseapp.com"
+      
+    ],
+    credentials: true,
+  })
+);
+
 
 // middleware 
 app.use(cors()) ;
@@ -33,6 +46,36 @@ async function run() {
       const result = await roomsCollection.find().toArray()
 
       res.send(result)
+
+    })
+    // update 
+    app.put("/update/:id", async (req,res)=>{
+      const id =req.params.id;
+      // console.log(id)
+      const filter ={_id:new ObjectId(id)}
+      // console.log(filter);
+      const option ={upsert:true};
+      const bookData= req.body;
+      console.log(bookData);
+      const spot ={
+        $set:{
+          
+          Availability:bookData.Availability
+        
+     
+        }
+      }
+      result = await roomsCollection.updateOne(filter,spot,option)
+      
+     res.send(result)
+    })
+
+    // post data 
+    app.post('/addBook', async(req,res)=>{
+      const newBook =req.body;
+      // console.log(newBook)
+      const result = await dataCollection.insertOne(newBook);
+      res.send(result);
 
     })
     // get a single job data 
